@@ -1,0 +1,47 @@
+[
+  {
+    "titulo": "Direito a Ferias",
+    "artigo": "Art. 129 - CLT",
+    "conteudo": "Todo empregado tera direito anualmente ao gozo de um periodo de ferias, sem prejuizo da remuneracao."
+  },
+  {
+    "titulo": "Periodo Aquisitivo",
+    "artigo": "Art. 130 - CLT",
+    "conteudo": "Apos cada periodo de 12 meses de vigencia do contrato de trabalho, o empregado tera direito a ferias de 30 dias corridos."
+  },
+  {
+    "titulo": "Reducao por Faltas",
+    "artigo": "Art. 130 - CLT",
+    "conteudo": "As ferias serao concedidas proporcionalmente ao numero de faltas injustificadas: ate 5 faltas = 30 dias; de 6 a 14 faltas = 24 dias; de 15 a 23 faltas = 18 dias; de 24 a 32 faltas = 12 dias."
+  },
+  {
+    "titulo": "Terco Constitucional",
+    "artigo": "Art. 7, XVII - CF/88",
+    "conteudo": "O empregado tem direito a receber, alem do salario normal, um acrescimo de pelo menos 1/3 sobre a remuneracao de ferias."
+  },
+  {
+    "titulo": "Abono Pecuniario",
+    "artigo": "Art. 143 - CLT",
+    "conteudo": "E facultado ao empregado converter 1/3 do periodo de ferias a que tiver direito em abono pecuniario, no valor da remuneracao que lhe seria devida nos dias correspondentes."
+  },
+  {
+    "titulo": "Prazo para Pagamento",
+    "artigo": "Art. 145 - CLT",
+    "conteudo": "O pagamento da remuneracao das ferias sera efetuado ate 2 dias antes do inicio do respectivo periodo de gozo."
+  },
+  {
+    "titulo": "Fracionamento",
+    "artigo": "Art. 134, 1 - CLT",
+    "conteudo": "Desde que haja concordancia do empregado, as ferias poderao ser usufruidas em ate 3 periodos, sendo que um deles nao podera ser inferior a 14 dias corridos e os demais nao poderao ser inferiores a 5 dias corridos, cada um."
+  },
+  {
+    "titulo": "Ferias em Dobro",
+    "artigo": "Art. 137 - CLT",
+    "conteudo": "Sempre que as ferias forem concedidas apos o prazo legal (periodo concessivo de 12 meses), o empregador pagara em dobro a respectiva remuneracao."
+  },
+  {
+    "titulo": "Inicio das Ferias",
+    "artigo": "Art. 134, 3 - CLT",
+    "conteudo": "E vedado o inicio das ferias no periodo de 2 dias que antecede feriado ou dia de repouso semanal remunerado."
+  }
+]

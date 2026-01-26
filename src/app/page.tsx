@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Header } from "@/components/header"
-import { VacationCalculator } from "@/components/vacation-calculator"
+import { VacationCalculator } from "@/components/vacation"
 import { CheckCircle2, Clock, ShieldCheck } from "lucide-react"
 
 export default function Home() {
