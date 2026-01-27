@@ -120,7 +120,7 @@ export function VacationCardForm({
             Abono pecuniário (valor isento de impostos)
           </p>
         </div>
-        <Switch id="vender" checked={venderDias} onCheckedChange={setVenderDias} />
+        <Switch id="vender" checked={venderDias} onCheckedChange={setVenderDias}/>
       </div>
 
       {/* Botão Calcular */}

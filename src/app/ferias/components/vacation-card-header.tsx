@@ -1,6 +1,5 @@
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { CalendarDays } from 'lucide-react'
-import { LegislationSheet } from './legislation-sheet'
 
 export function VacationCardHeader() {
   return (
@@ -19,8 +18,6 @@ export function VacationCardHeader() {
             </CardDescription>
           </div>
         </div>
-
-        <LegislationSheet />
       </div>
     </CardHeader>
   )

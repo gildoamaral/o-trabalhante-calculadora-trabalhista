@@ -86,7 +86,7 @@ export function DateRangePicker({
           <CalendarRange className="mr-2 h-4 w-4" />
           {value?.from ? (
             value.to ? (
-              <span className="flex-1">
+              <span className="flex-1 sm:text-sm text-xs">
                 {format(value.from, "dd MMM yyyy", { locale: ptBR })} -{" "}
                 {format(value.to, "dd MMM yyyy", { locale: ptBR })}
                 <span className="ml-2 text-primary font-medium">
@@ -100,14 +100,13 @@ export function DateRangePicker({
             <span>{placeholder}</span>
           )}
           {value && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-6 w-6 p-0 ml-2"
+            <span
+              role="button"
+              className="h-6 w-6 p-0 ml-2 inline-flex items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors"
               onClick={handleClear}
             >
               <X className="h-3 w-3" />
-            </Button>
+            </span>
           )}
         </Button>
       </PopoverTrigger>

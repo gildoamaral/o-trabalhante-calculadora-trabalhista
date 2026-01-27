@@ -2,10 +2,11 @@ import React from "react"
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeProvider } from '@/components/layout/theme-provider'
 import './globals.css'
-import { Header } from '@/components/header'
-import { FeaturesBeneficios } from '@/components/features-beneficios'
+import { Header } from '@/components/layout/header'
+import { FeaturesBeneficios } from '@/components/layout/features-beneficios'
+import { FloatingLegislationButton } from '@/components/layout/floating-legislation-button'
 
 
 
@@ -64,6 +65,9 @@ export default function RootLayout({
 
               {children}
             </main>
+
+            {/* Botão flutuante de legislação */}
+            <FloatingLegislationButton />
 
             {/* Footer info */}
             <footer className="mt-16 text-center border-t border-border py-8" >

@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { BookOpen } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -22,31 +23,56 @@ interface LegislacaoItem {
   conteudo: string
 }
 
-/**
- * Sheet lateral com informações sobre legislação trabalhista de férias
- */
-export function LegislationSheet() {
+const legislationData: Record<string, { title: string; description: string; items: LegislacaoItem[] }> = {
+  "/ferias": {
+    title: "Legislação Trabalhista - Férias",
+    description: "Principais artigos da CLT e Constituição sobre férias",
+    items: legislacaoFerias as LegislacaoItem[],
+  },
+  "/decimo-terceiro": {
+    title: "Legislação Trabalhista - 13º Salário",
+    description: "Principais artigos da CLT sobre 13º salário",
+    items: [], // Adicionar dados depois
+  },
+  "/recisao": {
+    title: "Legislação Trabalhista - Rescisão",
+    description: "Principais artigos da CLT sobre rescisão",
+    items: [], // Adicionar dados depois
+  },
+}
+
+export function FloatingLegislationButton() {
+  const pathname = usePathname()
+  const legislation = legislationData[pathname]
+
+  if (!legislation || legislation.items.length === 0) {
+    return null
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2 bg-transparent">
-          <BookOpen className="h-4 w-4" />
-          <span className="hidden sm:inline">Legislação</span>
+        <Button
+          size="icon"
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
+          aria-label="Ver legislação"
+        >
+          <BookOpen className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-lg">
+      <SheetContent className="w-full sm:max-w-lg px-4">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-primary" />
-            Legislação Trabalhista
+            {legislation.title}
           </SheetTitle>
           <SheetDescription>
-            Principais artigos da CLT e Constituição sobre férias
+            {legislation.description}
           </SheetDescription>
         </SheetHeader>
         <ScrollArea className="h-[calc(100vh-140px)] mt-6 pr-4">
           <div className="space-y-4">
-            {(legislacaoFerias as LegislacaoItem[]).map((item, index) => (
+            {legislation.items.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: 20 }}

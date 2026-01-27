@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion"
 import { Calculator } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
+import Link from "next/link"
+import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { Badge } from "@/components/ui/badge"
 
 export function Header() {
@@ -13,7 +14,7 @@ export function Header() {
       transition={{ duration: 0.3 }}
       className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm"
     >
-      <div className="container mx-auto flex h-14 items-center justify-between px-4">
+      <div className="container mx-auto flex h-14 items-center px-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10">
             <Calculator className="h-4 w-4 text-primary" />
@@ -23,14 +24,14 @@ export function Header() {
           </span>
         </div>
 
-        <nav className="hidden md:flex items-center gap-1">
-          <a 
-            href="#" 
+        <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+          <Link 
+            href="/ferias" 
             className="px-3 py-2 text-sm font-medium text-primary bg-primary/5 rounded-md transition-colors"
           >
             Ferias
-          </a>
-          <a 
+          </Link>
+          <Link 
             href="#" 
             className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-2"
           >
@@ -38,8 +39,8 @@ export function Header() {
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
               Em breve
             </Badge>
-          </a>
-          <a 
+          </Link>
+          <Link 
             href="#" 
             className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-2"
           >
@@ -47,10 +48,12 @@ export function Header() {
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
               Em breve
             </Badge>
-          </a>
+          </Link>
         </nav>
 
-        <ThemeToggle />
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </div>
     </motion.header>
   )
