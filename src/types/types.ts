@@ -1,4 +1,4 @@
-export interface VacationResult {
+export interface VacationResultType {
   salarioBruto: number;
   diasFerias: number;
   valorFerias: number;

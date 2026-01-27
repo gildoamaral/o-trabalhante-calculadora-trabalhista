@@ -1,44 +1,31 @@
 "use client"
-
+import { Button } from '@/components/ui/button'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Calculator, CalendarDays, Info } from 'lucide-react'
 import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Calculator, CalendarDays, Info } from "lucide-react"
-import { differenceInDays } from "date-fns"
-import type { DateRange } from "react-day-picker"
+import { LegislationSheet, SellDaysToggle, VacationResult } from './components'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { DateRangePicker } from '@/components/ui/date-range-picker'
+import { Label } from '@/components/ui/label'
+import { calcularFerias } from '@/lib/calculations/vacation'
+import { parseCurrency } from '@/lib/format'
+import { differenceInDays } from 'date-fns'
+import { DateRange } from 'react-day-picker'
+import { VacationResultType } from '@/types/types'
+import { Input } from '@/components/ui/input'
+import { CalculateButton } from '@/components/calculate-button'
 
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { DateRangePicker } from "@/components/ui/date-range-picker"
-import { LegislationSheet } from "@/components/vacation/legislation-sheet"
-import { VacationResult } from "@/components/vacation/vacation-result"
-import { SalaryInput } from "@/components/vacation/salary-input"
-import { SellDaysToggle } from "@/components/vacation/sell-days-toggle"
-import { calcularFerias } from "@/lib/calculations/vacation"
-import { parseCurrency } from "@/lib/format"
-import type { VacationResult as VacationResultType } from "@/types/types"
+
 
 const MAX_VACATION_DAYS = 30
 
-export function VacationCalculator() {
+export default function VacationCalculator() {
   const [salario, setSalario] = React.useState("")
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const [venderDias, setVenderDias] = React.useState(false)
   const [result, setResult] = React.useState<VacationResultType | null>(null)
   const [isCalculating, setIsCalculating] = React.useState(false)
-
   const diasFerias = React.useMemo(() => {
     if (dateRange?.from && dateRange?.to) {
       return differenceInDays(dateRange.to, dateRange.from) + 1
@@ -62,9 +49,12 @@ export function VacationCalculator() {
 
   const isFormValid = salario && diasFerias > 0
 
+
+
   return (
     <TooltipProvider>
       <div className="w-full max-w-2xl mx-auto space-y-6">
+
         {/* Formulário */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -93,13 +83,41 @@ export function VacationCalculator() {
             </CardHeader>
 
             <CardContent className="space-y-5">
+
               {/* Salário */}
-              <SalaryInput value={salario} onChange={setSalario} />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="salario" className="text-foreground font-medium">
+                    Salário Bruto Mensal
+                  </Label>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Informe seu salário bruto (antes dos descontos)</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                    R$
+                  </span>
+                  <Input
+                    id="salario"
+                    type="text"
+                    placeholder="0,00"
+                    value={salario}
+                    onChange={(e) => setSalario(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
 
               {/* Período de Férias */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Label className="text-foreground font-medium">
+                  <Label htmlFor="periodo-ferias" className="text-foreground font-medium">
                     Período de Férias
                   </Label>
                   <Tooltip>
@@ -153,47 +171,3 @@ export function VacationCalculator() {
   )
 }
 
-function CalculateButton({
-  onClick,
-  disabled,
-  isCalculating,
-}: {
-  onClick: () => void
-  disabled: boolean
-  isCalculating: boolean
-}) {
-  return (
-    <Button onClick={onClick} disabled={disabled} className="w-full" size="lg">
-      <AnimatePresence mode="wait">
-        {isCalculating ? (
-          <motion.div
-            key="calculating"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex items-center gap-2"
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            >
-              <Calculator className="h-5 w-5" />
-            </motion.div>
-            Calculando...
-          </motion.div>
-        ) : (
-          <motion.div
-            key="calculate"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex items-center gap-2"
-          >
-            <Calculator className="h-5 w-5" />
-            Calcular Férias
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </Button>
-  )
-}
