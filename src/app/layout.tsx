@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 import { Header } from '@/components/header'
-import { CheckCircle2, Clock, ShieldCheck } from "lucide-react"
+import { FeaturesBeneficios } from '@/components/features-beneficios'
 
 
 
@@ -55,26 +55,12 @@ export default function RootLayout({
             <main className="container mx-auto px-4 py-8 md:py-12">
 
               {/* Hero Section */}
-              <section className="text-center mb-10">
+              <section className="text-center mb-3">
                 <h1 className="text-3xl md:text-4xl font-bold mb-3">Calculadora de Verbas Trabalhistas</h1>
                 <p className="text-muted-foreground max-w-xl mx-auto">Baseado na legislação trabalhista brasileira.</p>
               </section>
 
-              {/* Features */}
-              <div className="flex flex-wrap items-center justify-center gap-6 mb-10 text-sm text-muted-foreground ">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-primary" />
-                  <span>Cálculo instantâneo</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  <span>Tabelas INSS/IRRF 2024</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-primary" />
-                  <span>100% gratuito</span>
-                </div>
-              </div>
+              <FeaturesBeneficios />
 
               {children}
             </main>

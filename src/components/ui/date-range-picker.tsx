@@ -78,7 +78,7 @@ export function DateRangePicker({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "w-full justify-start text-left font-normal bg-transparent hover:bg-muted",
+            "w-full justify-start text-left font-normal bg-transparent hover:text-foreground hover:bg-muted",
             !value && "text-muted-foreground",
             className
           )}
@@ -112,7 +112,7 @@ export function DateRangePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        <div className="min-h-[300px]">
+        <div className="min-h-75">
           <Calendar
             mode="range"
             defaultMonth={value?.from}
