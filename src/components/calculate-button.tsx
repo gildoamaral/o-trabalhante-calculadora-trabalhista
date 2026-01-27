@@ -7,10 +7,12 @@ export function CalculateButton({
   onClick,
   disabled,
   isCalculating,
+  label
 }: {
   onClick: () => void
   disabled: boolean
   isCalculating: boolean
+  label: string
 }) {
   return (
     <Button onClick={onClick} disabled={disabled} className="w-full" size="lg">
@@ -40,7 +42,7 @@ export function CalculateButton({
             className="flex items-center gap-2"
           >
             <Calculator className="h-5 w-5" />
-            Calcular Férias
+            {label}
           </motion.div>
         )}
       </AnimatePresence>

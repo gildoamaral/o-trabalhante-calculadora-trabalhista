@@ -9,7 +9,7 @@ import type { DateRange } from "react-day-picker"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { formatCurrency } from "@/lib/format"
-import type { VacationResult as VacationResultType } from "@/types/types"
+import type { VacationResultType } from "@/types/types"
 
 interface VacationResultProps {
   /** Resultado do cálculo de férias */

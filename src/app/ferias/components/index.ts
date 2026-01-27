@@ -1,3 +1,4 @@
 export { VacationResult } from "./vacation-result";
 export { LegislationSheet } from "./legislation-sheet";
-export { SellDaysToggle } from "./sell-days-toggle";
+export { VacationCardHeader } from "./vacation-card-header";
+export { VacationCardForm } from "./vacation-card-form";
