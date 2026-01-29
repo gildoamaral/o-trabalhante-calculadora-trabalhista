@@ -35,8 +35,8 @@ export function Header() {
         {/* Nome */}
         <div className="flex items-center gap-4 group transition-all duration-300">
 
-          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10 transition-shadow duration-300 group-hover:shadow-md group-hover:shadow-primary/20">
-            <Calculator className="h-4 w-4 text-primary" />
+          <div className="flex items-center justify-center w-10 h-10 rounded-md transition-shadow duration-300 group-hover:shadow-md group-hover:shadow-primary/20">
+            <img src="otrabalhante.jpg" alt="O trabalhante" className='rounded-xl' />
           </div>
 
           <div className='flex flex-col transition-all duration-300 group-hover:translate-x-0.5'>

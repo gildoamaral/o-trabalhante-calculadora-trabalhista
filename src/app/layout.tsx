@@ -14,25 +14,12 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'CalcTrab - Calculadora Trabalhista CLT',
+  title: 'O Trabalhante - Calculadora Trabalhista',
   description: 'Calcule suas verbas trabalhistas: férias, rescisão e mais. Simples, rápido e preciso.',
-  generator: 'v0.app',
+  generator: 'Next.js',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/otrabalhante.jpg',
+    apple: '/otrabalhante.jpg',
   },
 }
 
