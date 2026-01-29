@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Calculator } from "lucide-react"
 import Link from "next/link"
@@ -7,32 +8,60 @@ import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { Badge } from "@/components/ui/badge"
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm"
+      transition={{ duration: 0.4}}
+      className={`sticky top-0 z-50 w-full border-b ${
+        isScrolled 
+          ? 'border-border/40 bg-background/70 backdrop-blur-md shadow-sm' 
+          : 'border-border bg-background/95 backdrop-blur-sm'
+      }`}
     >
-      <div className="container mx-auto flex h-14 items-center px-4">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10">
+      <div className="container mx-auto flex h-15 items-center justify-between px-4">
+
+        {/* Nome */}
+        <div className="flex items-center gap-4 group transition-all duration-300">
+
+          <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10 transition-shadow duration-300 group-hover:shadow-md group-hover:shadow-primary/20">
             <Calculator className="h-4 w-4 text-primary" />
           </div>
-          <span className="text-lg font-semibold text-foreground">
-            CalcTrab
-          </span>
+
+          <div className='flex flex-col transition-all duration-300 group-hover:translate-x-0.5'>
+          
+            <span className="text-lg font-semibold text-foreground leading-tight">
+              O Trabalhante
+            </span>
+
+            <span className="text-sm text-secondary-foreground leading-tight">
+              Calculadora Trabalhista
+              </span>
+          
+          </div>
         </div>
 
+        {/* Links */}
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-          <Link 
-            href="/ferias" 
+          <Link
+            href="/ferias"
             className="px-3 py-2 text-sm font-medium text-primary bg-primary/5 rounded-md transition-colors"
           >
             Ferias
           </Link>
-          <Link 
-            href="#" 
+          <Link
+            href="#"
             className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-2"
           >
             Rescisao
@@ -40,8 +69,8 @@ export function Header() {
               Em breve
             </Badge>
           </Link>
-          <Link 
-            href="#" 
+          <Link
+            href="#"
             className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-2"
           >
             13o Salario
@@ -51,6 +80,7 @@ export function Header() {
           </Link>
         </nav>
 
+        {/* Toggle */}
         <div className="ml-auto">
           <ThemeToggle />
         </div>
