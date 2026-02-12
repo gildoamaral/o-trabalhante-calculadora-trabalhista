@@ -38,7 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <div className="min-h-screen bg-background">
-          <Header />  
+            <Header />
 
             <main className="container mx-auto px-4 py-8 md:py-12">
 
@@ -47,8 +47,8 @@ export default function RootLayout({
                 <h1 className="text-3xl md:text-4xl font-bold mb-3">Calculadora de Verbas Trabalhistas</h1>
                 <p className="text-muted-foreground max-w-xl mx-auto">Baseado na legislação trabalhista brasileira.</p>
               </section>
-
-              <FeaturesBeneficios />
+              
+                <FeaturesBeneficios />
 
               {children}
             </main>

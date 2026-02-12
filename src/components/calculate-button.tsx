@@ -1,23 +1,39 @@
-
+import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from './ui/button'
 import { Calculator } from 'lucide-react'
 
+interface CalculateButtonProps {
+  onClick: () => void | Promise<void>;
+  disabled?: boolean;
+  children?: React.ReactNode;
+}
+
 export function CalculateButton({
   onClick,
   disabled,
-  isCalculating,
-  label
-}: {
-  onClick: () => void
-  disabled: boolean
-  isCalculating: boolean
-  label: string
-}) {
+  children,
+}: CalculateButtonProps) {
+  const [internalIsCalculating, setInternalIsCalculating] = useState(false);
+
+  const handleInternalClick = async () => {
+    setInternalIsCalculating(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    await onClick();
+
+    setInternalIsCalculating(false);
+  };
+
   return (
-    <Button onClick={onClick} disabled={disabled} className="w-full" size="lg">
+    <Button 
+      onClick={handleInternalClick} 
+      disabled={disabled || internalIsCalculating} 
+      className="w-full" 
+      size="lg"
+    >
       <AnimatePresence mode="wait">
-        {isCalculating ? (
+        {internalIsCalculating ? (
           <motion.div
             key="calculating"
             initial={{ opacity: 0 }}
@@ -42,7 +58,7 @@ export function CalculateButton({
             className="flex items-center gap-2"
           >
             <Calculator className="h-5 w-5" />
-            {label}
+            {children}
           </motion.div>
         )}
       </AnimatePresence>

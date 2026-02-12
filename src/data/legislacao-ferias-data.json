@@ -1,47 +1,62 @@
 [
   {
-    "titulo": "Direito a Ferias",
+    "titulo": "Direito a Férias",
     "artigo": "Art. 129 - CLT",
-    "conteudo": "Todo empregado tera direito anualmente ao gozo de um periodo de ferias, sem prejuizo da remuneracao."
+    "conteudo": "Todo empregado terá direito anualmente ao gozo de um período de férias, sem prejuízo da remuneração.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art129"
   },
   {
-    "titulo": "Periodo Aquisitivo",
+    "titulo": "Período Aquisitivo",
     "artigo": "Art. 130 - CLT",
-    "conteudo": "Apos cada periodo de 12 meses de vigencia do contrato de trabalho, o empregado tera direito a ferias de 30 dias corridos."
+    "conteudo": "Após cada período de 12 meses de vigência do contrato de trabalho, o empregado terá direito a férias de 30 dias corridos.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art130"
   },
   {
-    "titulo": "Reducao por Faltas",
+    "titulo": "Redução por Faltas",
     "artigo": "Art. 130 - CLT",
-    "conteudo": "As ferias serao concedidas proporcionalmente ao numero de faltas injustificadas: ate 5 faltas = 30 dias; de 6 a 14 faltas = 24 dias; de 15 a 23 faltas = 18 dias; de 24 a 32 faltas = 12 dias."
+    "conteudo": "As férias serão concedidas proporcionalmente ao número de faltas injustificadas: até 5 faltas = 30 dias; de 6 a 14 faltas = 24 dias; de 15 a 23 faltas = 18 dias; de 24 a 32 faltas = 12 dias.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art130"
   },
   {
-    "titulo": "Terco Constitucional",
+    "titulo": "Terço Constitucional",
     "artigo": "Art. 7, XVII - CF/88",
-    "conteudo": "O empregado tem direito a receber, alem do salario normal, um acrescimo de pelo menos 1/3 sobre a remuneracao de ferias."
+    "conteudo": "O empregado tem direito a receber, além do salário normal, um acréscimo de pelo menos 1/3 sobre a remuneração de férias.",
+    "link": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm#art7xvii"
   },
   {
-    "titulo": "Abono Pecuniario",
+    "titulo": "Abono Pecuniário",
     "artigo": "Art. 143 - CLT",
-    "conteudo": "E facultado ao empregado converter 1/3 do periodo de ferias a que tiver direito em abono pecuniario, no valor da remuneracao que lhe seria devida nos dias correspondentes."
+    "conteudo": "É facultado ao empregado converter 1/3 do período de férias a que tiver direito em abono pecuniário, no valor da remuneração que lhe seria devida nos dias correspondentes.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art143"
   },
   {
     "titulo": "Prazo para Pagamento",
     "artigo": "Art. 145 - CLT",
-    "conteudo": "O pagamento da remuneracao das ferias sera efetuado ate 2 dias antes do inicio do respectivo periodo de gozo."
+    "conteudo": "O pagamento da remuneração das férias será efetuado até 2 dias antes do início do respectivo período de gozo.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art145"
   },
   {
     "titulo": "Fracionamento",
-    "artigo": "Art. 134, 1 - CLT",
-    "conteudo": "Desde que haja concordancia do empregado, as ferias poderao ser usufruidas em ate 3 periodos, sendo que um deles nao podera ser inferior a 14 dias corridos e os demais nao poderao ser inferiores a 5 dias corridos, cada um."
+    "artigo": "Art. 134, § 1 - CLT",
+    "conteudo": "Desde que haja concordância do empregado, as férias poderão ser usufruídas em até 3 períodos, sendo que um deles não poderá ser inferior a 14 dias corridos e os demais não poderão ser inferiores a 5 dias corridos, cada um.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art134"
   },
   {
-    "titulo": "Ferias em Dobro",
+    "titulo": "Férias em Dobro",
     "artigo": "Art. 137 - CLT",
-    "conteudo": "Sempre que as ferias forem concedidas apos o prazo legal (periodo concessivo de 12 meses), o empregador pagara em dobro a respectiva remuneracao."
+    "conteudo": "Sempre que as férias forem concedidas após o prazo legal (período concessivo de 12 meses), o empregador pagará em dobro a respectiva remuneração.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art137"
   },
   {
-    "titulo": "Inicio das Ferias",
-    "artigo": "Art. 134, 3 - CLT",
-    "conteudo": "E vedado o inicio das ferias no periodo de 2 dias que antecede feriado ou dia de repouso semanal remunerado."
+    "titulo": "Início das Férias",
+    "artigo": "Art. 134, § 3 - CLT",
+    "conteudo": "É vedado o início das férias no período de 2 dias que antecede feriado ou dia de repouso semanal remunerado.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art134"
+  },
+  {
+    "titulo": "Férias Proporcionais",
+    "artigo": "Art. 146 - CLT",
+    "conteudo": "No caso de rescisão do contrato de trabalho, o empregado fará jus a receber as férias proporcionais ao tempo de serviço prestado no período aquisitivo em curso, além do terço constitucional correspondente.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art146"
   }
 ]

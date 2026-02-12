@@ -3,7 +3,7 @@ import { CalendarDays } from 'lucide-react'
 
 export function VacationCardHeader() {
   return (
-    <CardHeader className="pb-4">
+    <CardHeader>
       <div className="flex md:items-start items-center justify-between flex-col md:flex-row gap-2">
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10">

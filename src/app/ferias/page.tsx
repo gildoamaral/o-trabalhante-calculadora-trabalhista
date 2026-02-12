@@ -1,7 +1,6 @@
 "use client"
 import { AnimatePresence, motion } from 'framer-motion'
 import * as React from "react"
-import { VacationCardForm, VacationCardHeader, VacationResult } from './components'
 import { Card } from '@/components/ui/card'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { calcularFerias } from '@/lib/calculations/vacation'
@@ -9,8 +8,7 @@ import { parseCurrency } from '@/lib/format'
 import { differenceInDays } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { VacationResultType } from '@/types/types'
-
-
+import { VacationCardForm, VacationCardHeader, VacationResult } from './components'
 
 const MAX_VACATION_DAYS = 30
 
@@ -19,7 +17,7 @@ export default function VacationCalculator() {
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const [venderDias, setVenderDias] = React.useState(false)
   const [result, setResult] = React.useState<VacationResultType | null>(null)
-  const [isCalculating, setIsCalculating] = React.useState(false)
+  
   const diasFerias = React.useMemo(() => {
     if (dateRange?.from && dateRange?.to) {
       return differenceInDays(dateRange.to, dateRange.from) + 1
@@ -27,18 +25,12 @@ export default function VacationCalculator() {
     return 0
   }, [dateRange])
 
-  const handleCalculate = () => {
+const handleCalculate = () => {
     const salarioNum = parseCurrency(salario)
     if (isNaN(salarioNum) || salarioNum <= 0 || diasFerias === 0) return
 
-    setIsCalculating(true)
-
-    // Pequeno delay para feedback visual
-    setTimeout(() => {
-      const resultado = calcularFerias(salarioNum, diasFerias, venderDias)
-      setResult(resultado)
-      setIsCalculating(false)
-    }, 600)
+    const resultado = calcularFerias(salarioNum, diasFerias, venderDias)
+    setResult(resultado)
   }
 
   const isFormValid = salario && diasFerias > 0
@@ -55,7 +47,7 @@ export default function VacationCalculator() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <Card className="border-border shadow-sm">
+          <Card className="border-border shadow-sm space-y-2">
             <VacationCardHeader />
             <VacationCardForm
               salario={salario}
@@ -66,7 +58,6 @@ export default function VacationCalculator() {
               setVenderDias={setVenderDias}
               handleCalculate={handleCalculate}
               isFormValid={!!isFormValid}
-              isCalculating={isCalculating}
               maxVacationDays={MAX_VACATION_DAYS}
             />
           </Card>

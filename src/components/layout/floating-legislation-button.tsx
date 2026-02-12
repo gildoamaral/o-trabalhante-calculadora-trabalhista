@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
-import { BookOpen } from "lucide-react"
+import { BookOpen, ExternalLink } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
@@ -21,6 +21,7 @@ interface LegislacaoItem {
   titulo: string
   artigo: string
   conteudo: string
+  link: string
 }
 
 const legislationData: Record<string, { title: string; description: string; items: LegislacaoItem[] }> = {
@@ -34,7 +35,7 @@ const legislationData: Record<string, { title: string; description: string; item
     description: "Principais artigos da CLT sobre 13º salário",
     items: [], // Adicionar dados depois
   },
-  "/recisao": {
+  "/rescisao": {
     title: "Legislação Trabalhista - Rescisão",
     description: "Principais artigos da CLT sobre rescisão",
     items: [], // Adicionar dados depois
@@ -70,8 +71,8 @@ export function FloatingLegislationButton() {
             {legislation.description}
           </SheetDescription>
         </SheetHeader>
-        <ScrollArea className="h-[calc(100vh-140px)] mt-6 pr-4">
-          <div className="space-y-4">
+        <ScrollArea className="h-full overflow-y-auto">
+          <div className="space-y-4 pb-6">
             {legislation.items.map((item, index) => (
               <motion.div
                 key={index}
@@ -84,9 +85,23 @@ export function FloatingLegislationButton() {
                   <h4 className="font-semibold text-foreground">
                     {item.titulo}
                   </h4>
-                  <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap">
-                    {item.artigo}
-                  </span>
+                  {item.link ? (
+    <a 
+      href={item.link} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="group"
+    >
+      <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap flex items-center gap-1 hover:bg-primary/20 transition-colors">
+        {item.artigo}
+        <ExternalLink className="h-3 w-3 opacity-50 group-hover:opacity-100" />
+      </span>
+    </a>
+  ) : (
+    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap">
+      {item.artigo}
+    </span>
+  )}
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {item.conteudo}

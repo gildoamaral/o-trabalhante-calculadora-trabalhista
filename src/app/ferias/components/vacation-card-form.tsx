@@ -1,12 +1,10 @@
 import { CalculateButton } from '@/components/calculate-button'
+import { LabelWithTooltip } from '@/components/label-with-tooltip'
 import { CardContent } from '@/components/ui/card'
 import { DateRangePicker } from '@/components/ui/date-range-picker'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { formatCurrencyInput } from '@/lib/format'
-import { Info } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 
 interface VacationCardFormProps {
@@ -18,7 +16,6 @@ interface VacationCardFormProps {
   setVenderDias: (value: boolean) => void
   handleCalculate: () => void
   isFormValid: boolean
-  isCalculating: boolean
   maxVacationDays: number
 }
 
@@ -31,7 +28,6 @@ export function VacationCardForm({
   setVenderDias,
   handleCalculate,
   isFormValid,
-  isCalculating,
   maxVacationDays,
 }: VacationCardFormProps) {
   const handleSalarioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,21 +37,14 @@ export function VacationCardForm({
 
   return (
     <CardContent className="space-y-5">
+
       {/* Salário */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Label htmlFor="salario" className="text-foreground font-medium">
-            Salário Bruto Mensal
-          </Label>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Informe seu salário bruto (antes dos descontos)</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
+        <LabelWithTooltip
+          label="Salário"
+          tooltipText="Informe seu salário bruto mensal para calcular o valor das férias."
+          htmlFor="salario"
+        />
         <div className="relative">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
             R$
@@ -69,26 +58,18 @@ export function VacationCardForm({
             className="pl-10"
           />
         </div>
+
       </div>
 
       {/* Período de Férias */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Label htmlFor="periodo-ferias" className="text-foreground font-medium">
-            Período de Férias
-          </Label>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                Selecione o período das suas férias (máximo{" "}
-                {maxVacationDays} dias)
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
+
+        <LabelWithTooltip
+          label="Período de Férias"
+          tooltipText={`Selecione o período das suas férias. O máximo permitido é de ${maxVacationDays} dias.`}
+          htmlFor="date-range"
+        />
+
         <DateRangePicker
           value={dateRange}
           onChange={setDateRange}
@@ -98,38 +79,22 @@ export function VacationCardForm({
       </div>
 
       {/* Vender dias */}
-      <div className="flex items-center justify-between p-4 rounded-lg border border-border bg-muted/30">
+      <div className="flex items-center justify-between p-4 rounded-lg border border-border bg-muted/80">
         <div className="space-y-0.5 flex-1">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="vender" className="text-foreground font-medium">
-              Vender 10 dias
-            </Label>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p>
-                  Abono pecuniário: converta 1/3 das férias em dinheiro. Este
-                  valor é isento de INSS e IRRF.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
+          <LabelWithTooltip
+            label="Vender dias de férias"
+            tooltipText="Ative esta opção se deseja vender parte dos seus dias de férias (abono pecuniário)."
+            htmlFor="vender"
+          />
           <p className="text-sm text-muted-foreground">
             Abono pecuniário (valor isento de impostos)
           </p>
         </div>
-        <Switch id="vender" checked={venderDias} onCheckedChange={setVenderDias}/>
+        <Switch id="vender" checked={venderDias} onCheckedChange={setVenderDias} />
       </div>
 
       {/* Botão Calcular */}
-      <CalculateButton
-        onClick={handleCalculate}
-        disabled={!isFormValid || isCalculating}
-        isCalculating={isCalculating}
-        label="Calcular Férias"
-      />
+      <CalculateButton onClick={handleCalculate} disabled={!isFormValid}> Calcular Férias </CalculateButton>
     </CardContent>
   )
 }
