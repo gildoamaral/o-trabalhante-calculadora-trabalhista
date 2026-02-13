@@ -5,7 +5,7 @@ import { CheckCircle2, Clock, ShieldCheck } from "lucide-react"
 
 const features = [
   { icon: Clock, text: "Cálculo instantâneo" },
-  { icon: ShieldCheck, text: "Tabelas INSS/IRRF 2024" },
+  { icon: ShieldCheck, text: "Tabelas INSS/IRRF 2026" },
   { icon: CheckCircle2, text: "100% gratuito" },
 ]
 

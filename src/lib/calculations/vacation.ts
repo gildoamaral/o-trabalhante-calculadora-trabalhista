@@ -1,4 +1,4 @@
-import type { VacationResult } from "@/types/types";
+import type { VacationResultType } from "@/types/types";
 import { calcularINSS, calcularIRRF } from "./taxes";
 
 /**
@@ -13,14 +13,12 @@ export function calcularFerias(
   salarioBruto: number,
   diasFerias: number,
   venderDias: boolean,
-): VacationResult {
-  // Valor proporcional das férias
+): VacationResultType {
+
   const valorFerias = (salarioBruto / 30) * diasFerias;
 
-  // 1/3 constitucional sobre o valor das férias
   const tercoConstitucional = valorFerias / 3;
 
-  // Abono pecuniário (venda de 10 dias)
   let abonoPecuniario = 0;
   let tercoAbono = 0;
 
@@ -29,14 +27,12 @@ export function calcularFerias(
     tercoAbono = abonoPecuniario / 3;
   }
 
-  // Total bruto inclui férias + 1/3 + abono + 1/3 sobre abono
   const totalBruto =
     valorFerias + tercoConstitucional + abonoPecuniario + tercoAbono;
 
   // Base de cálculo para descontos (não inclui abono, que é isento)
   const baseCalculoDesconto = valorFerias + tercoConstitucional;
 
-  // Cálculo dos descontos
   const inss = calcularINSS(baseCalculoDesconto);
   const irrf = Math.max(0, calcularIRRF(baseCalculoDesconto, inss));
 

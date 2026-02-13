@@ -1,80 +1,64 @@
-/**
- * Cálculos de impostos trabalhistas (INSS e IRRF)
- * Baseado nas tabelas de 2024
- */
-
-// Faixas INSS 2024
 const INSS_FAIXAS = [
-  { limite: 1412.0, aliquota: 0.075 },
-  { limite: 2666.68, aliquota: 0.09 },
-  { limite: 4000.03, aliquota: 0.12 },
-  { limite: 7786.02, aliquota: 0.14 },
+  { limite: 1621.00, aliquota: 0.075, deducao: 0 },
+  { limite: 2902.84, aliquota: 0.09,  deducao: 24.32 },
+  { limite: 4354.27, aliquota: 0.12,  deducao: 111.40 },
+  { limite: 8475.55, aliquota: 0.14,  deducao: 198.49 },
+] as const;
+const TETO_INSS_CONTRIBUICAO = 988.09;
+
+// Tabela Progressiva Base de 2026 (para rendas acima de R$ 7.350 ou base de cálculo inicial)
+export const IRRF_TABELA_2026 = [
+  { limite: 2428.80, aliquota: 0, deducao: 0 },
+  { limite: 2826.65, aliquota: 0.075, deducao: 182.16 },
+  { limite: 3751.05, aliquota: 0.15, deducao: 394.16 },
+  { limite: 4664.68, aliquota: 0.225, deducao: 675.49 },
+  { limite: Infinity, aliquota: 0.275, deducao: 908.73 },
 ] as const;
 
-// Faixas IRRF 2024
-const IRRF_FAIXAS = [
-  { limite: 2259.2, aliquota: 0, deducao: 0 },
-  { limite: 2826.65, aliquota: 0.075, deducao: 169.44 },
-  { limite: 3751.05, aliquota: 0.15, deducao: 381.44 },
-  { limite: 4664.68, aliquota: 0.225, deducao: 662.77 },
-  { limite: Infinity, aliquota: 0.275, deducao: 896.0 },
-] as const;
+// Constantes da Nova Regra de 2026
+export const IRRF_CONFIG_2026 = {
+  ISENCAO_TOTAL: 5000.00,
+  FAIXA_TRANSICAO_MAX: 7350.00,
+  DESCONTO_SIMPLIFICADO: 607.20, // Opção padrão caso não use deduções legais
+  DEDUCAO_POR_DEPENDENTE: 189.59,
+};
 
 /**
- * Calcula o desconto de INSS com base no salário
- * Utiliza alíquotas progressivas conforme tabela de 2024
+ * Calcula o INSS de forma simplificada usando a fórmula:
+ * (Salário * Alíquota) - Parcela a Deduzir
  */
 export function calcularINSS(salario: number): number {
-  if (salario <= INSS_FAIXAS[0].limite) {
-    return salario * INSS_FAIXAS[0].aliquota;
-  } else if (salario <= INSS_FAIXAS[1].limite) {
-    return (
-      INSS_FAIXAS[0].limite * INSS_FAIXAS[0].aliquota +
-      (salario - INSS_FAIXAS[0].limite) * INSS_FAIXAS[1].aliquota
-    );
-  } else if (salario <= INSS_FAIXAS[2].limite) {
-    return (
-      INSS_FAIXAS[0].limite * INSS_FAIXAS[0].aliquota +
-      (INSS_FAIXAS[1].limite - INSS_FAIXAS[0].limite) *
-        INSS_FAIXAS[1].aliquota +
-      (salario - INSS_FAIXAS[1].limite) * INSS_FAIXAS[2].aliquota
-    );
-  } else if (salario <= INSS_FAIXAS[3].limite) {
-    return (
-      INSS_FAIXAS[0].limite * INSS_FAIXAS[0].aliquota +
-      (INSS_FAIXAS[1].limite - INSS_FAIXAS[0].limite) *
-        INSS_FAIXAS[1].aliquota +
-      (INSS_FAIXAS[2].limite - INSS_FAIXAS[1].limite) *
-        INSS_FAIXAS[2].aliquota +
-      (salario - INSS_FAIXAS[2].limite) * INSS_FAIXAS[3].aliquota
-    );
-  } else {
-    // Teto do INSS
-    return (
-      INSS_FAIXAS[0].limite * INSS_FAIXAS[0].aliquota +
-      (INSS_FAIXAS[1].limite - INSS_FAIXAS[0].limite) *
-        INSS_FAIXAS[1].aliquota +
-      (INSS_FAIXAS[2].limite - INSS_FAIXAS[1].limite) *
-        INSS_FAIXAS[2].aliquota +
-      (INSS_FAIXAS[3].limite - INSS_FAIXAS[2].limite) * INSS_FAIXAS[3].aliquota
-    );
-  }
+  const limiteMaximo = INSS_FAIXAS[INSS_FAIXAS.length - 1].limite;
+  if (salario >= limiteMaximo) return TETO_INSS_CONTRIBUICAO;
+
+  const faixa = INSS_FAIXAS.find((f) => salario <= f.limite) || INSS_FAIXAS[INSS_FAIXAS.length - 1];
+
+  const resultado = (salario * faixa.aliquota) - faixa.deducao;
+  
+  return Number(resultado.toFixed(2));
 }
 
 /**
  * Calcula o desconto de IRRF com base na base de cálculo
  * A base de cálculo é o valor bruto menos o INSS
  */
-export function calcularIRRF(baseCalculo: number, inss: number): number {
-  const base = baseCalculo - inss;
+export function calcularIRRF(
+  salarioBruto: number, 
+  descontoINSS: number, 
+  numeroDependentes: number = 0
+): number {
+  if (salarioBruto <= IRRF_CONFIG_2026.ISENCAO_TOTAL) return 0;
 
-  for (const faixa of IRRF_FAIXAS) {
-    if (base <= faixa.limite) {
-      return base * faixa.aliquota - faixa.deducao;
-    }
+  const deducoesLegais = descontoINSS + (numeroDependentes * IRRF_CONFIG_2026.DEDUCAO_POR_DEPENDENTE);
+  const baseCalculo = salarioBruto - Math.max(deducoesLegais, IRRF_CONFIG_2026.DESCONTO_SIMPLIFICADO);
+
+  const faixa = IRRF_TABELA_2026.find(f => baseCalculo <= f.limite)!;
+  let imposto = Math.max(0, (baseCalculo * faixa.aliquota) - faixa.deducao);
+
+  if (salarioBruto > IRRF_CONFIG_2026.ISENCAO_TOTAL && 
+      salarioBruto <= IRRF_CONFIG_2026.FAIXA_TRANSICAO_MAX) {
+    imposto = Math.max(0, imposto - Math.max(0, 978.62 - (0.133145 * salarioBruto)));
   }
 
-  // Última faixa (maior que todos os limites)
-  const ultimaFaixa = IRRF_FAIXAS[IRRF_FAIXAS.length - 1];
-  return base * ultimaFaixa.aliquota - ultimaFaixa.deducao;
+  return Number(imposto.toFixed(2));
 }

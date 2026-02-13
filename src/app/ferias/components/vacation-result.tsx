@@ -218,7 +218,7 @@ function DisclaimerNote() {
     >
       <Info className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
       <p className="text-xs text-muted-foreground">
-        Valores aproximados com base nas tabelas de INSS e IRRF de 2024.
+        Valores aproximados com base nas tabelas de INSS e IRRF de 2026.
         Consulte o RH da sua empresa para valores exatos.
       </p>
     </motion.div>
