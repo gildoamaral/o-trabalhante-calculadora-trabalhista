@@ -1,5 +1,5 @@
-import { CalculateButton } from '@/components/calculate-button'
-import { LabelWithTooltip } from '@/components/label-with-tooltip'
+import { CalculateButton } from '@/components/features/calculate-button'
+import { LabelWithTooltip } from '@/components/ui/label-with-tooltip'
 import { CardContent } from '@/components/ui/card'
 import { DateRangePicker } from '@/components/ui/date-range-picker'
 import { Input } from '@/components/ui/input'

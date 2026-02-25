@@ -30,7 +30,7 @@ export function Header() {
           : 'border-border bg-background/95 backdrop-blur-sm'
       }`}
     >
-      <div className="container mx-auto flex h-15 items-center justify-between px-4">
+      <div className="w-full lg:container lg:mx-auto flex h-15 items-center justify-between px-4">
 
         {/* Nome */}
         <div className="flex items-center gap-4 group transition-all duration-300">

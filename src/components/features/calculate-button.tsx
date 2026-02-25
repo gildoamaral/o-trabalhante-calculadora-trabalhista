@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { Calculator } from 'lucide-react'
 
 interface CalculateButtonProps {
