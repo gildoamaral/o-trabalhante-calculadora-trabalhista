@@ -86,22 +86,22 @@ export function FloatingLegislationButton() {
                     {item.titulo}
                   </h4>
                   {item.link ? (
-    <a 
-      href={item.link} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="group"
-    >
-      <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap flex items-center gap-1 hover:bg-primary/20 transition-colors">
-        {item.artigo}
-        <ExternalLink className="h-3 w-3 opacity-50 group-hover:opacity-100" />
-      </span>
-    </a>
-  ) : (
-    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap">
-      {item.artigo}
-    </span>
-  )}
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group"
+                    >
+                      <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap flex items-center gap-1 hover:bg-primary/20 transition-colors">
+                        {item.artigo}
+                        <ExternalLink className="h-3 w-3 opacity-50 group-hover:opacity-100" />
+                      </span>
+                    </a>
+                  ) : (
+                    <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap">
+                      {item.artigo}
+                    </span>
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {item.conteudo}

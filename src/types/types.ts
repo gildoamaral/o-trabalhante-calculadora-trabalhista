@@ -1,5 +1,6 @@
 export interface VacationResultType {
   salarioBruto: number;
+  rendaVariavel?: number;
   diasFerias: number;
   valorFerias: number;
   tercoConstitucional: number;

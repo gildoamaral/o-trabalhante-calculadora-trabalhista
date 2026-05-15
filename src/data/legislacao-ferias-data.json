@@ -35,6 +35,18 @@
     "conteudo": "O pagamento da remuneração das férias será efetuado até 2 dias antes do início do respectivo período de gozo.",
     "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art145"
   },
+   {
+    "titulo": "Horas Extras",
+    "artigo": "Art. 142, § 3 - CLT",
+    "conteudo": "O Pagamento de Horas Extras será acrescido do valor do salário e servirá como base para os cálculos de férias.",
+    "link": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art142§5"
+  },
+    {
+    "titulo": "Taxa do IRRF",
+    "artigo": "Tabela IRRF",
+    "conteudo": "O numero de dependentes influencia no valor do desconto. Terá uma influência de R$ 189,56",
+    "link": "https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026"
+  },
   {
     "titulo": "Fracionamento",
     "artigo": "Art. 134, § 1 - CLT",

@@ -16,8 +16,10 @@ export default function VacationCalculator() {
   const [salario, setSalario] = React.useState("")
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const [venderDias, setVenderDias] = React.useState(false)
+  const [numeroDependentes, setNumeroDependentes] = React.useState<number>(0)
+  const [rendaVariavel, setRendaVariavel] = React.useState<string>("")
   const [result, setResult] = React.useState<VacationResultType | null>(null)
-  
+
   const diasFerias = React.useMemo(() => {
     if (dateRange?.from && dateRange?.to) {
       return differenceInDays(dateRange.to, dateRange.from) + 1
@@ -25,11 +27,11 @@ export default function VacationCalculator() {
     return 0
   }, [dateRange])
 
-const handleCalculate = () => {
+  const handleCalculate = () => {
     const salarioNum = parseCurrency(salario)
+    const rendaVariavelNum = rendaVariavel ? parseCurrency(rendaVariavel) : 0
     if (isNaN(salarioNum) || salarioNum <= 0 || diasFerias === 0) return
-
-    const resultado = calcularFerias(salarioNum, diasFerias, venderDias)
+    const resultado = calcularFerias(salarioNum, diasFerias, venderDias, numeroDependentes, rendaVariavelNum)
     setResult(resultado)
   }
 
@@ -56,9 +58,15 @@ const handleCalculate = () => {
               setDateRange={setDateRange}
               venderDias={venderDias}
               setVenderDias={setVenderDias}
+              numeroDependentes={numeroDependentes}
+              setNumeroDependentes={setNumeroDependentes}
+              rendaVariavel={rendaVariavel}
+              setRendaVariavel={setRendaVariavel}
               handleCalculate={handleCalculate}
               isFormValid={!!isFormValid}
               maxVacationDays={MAX_VACATION_DAYS}
+              // numeroDependentes={numeroDependentes}
+              // setNumeroDependentes={setNumeroDependetes}
             />
           </Card>
         </motion.div>

@@ -6,6 +6,9 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { formatCurrencyInput } from '@/lib/format'
 import { DateRange } from 'react-day-picker'
+import * as React from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronDown } from 'lucide-react'
 
 interface VacationCardFormProps {
   salario: string
@@ -14,6 +17,10 @@ interface VacationCardFormProps {
   setDateRange: (value: DateRange | undefined) => void
   venderDias: boolean
   setVenderDias: (value: boolean) => void
+  numeroDependentes: number
+  setNumeroDependentes: (value: number) => void
+  rendaVariavel?: string
+  setRendaVariavel?: (value: string) => void
   handleCalculate: () => void
   isFormValid: boolean
   maxVacationDays: number
@@ -26,13 +33,36 @@ export function VacationCardForm({
   setDateRange,
   venderDias,
   setVenderDias,
+  numeroDependentes,
+  setNumeroDependentes,
+  rendaVariavel,
+  setRendaVariavel,
   handleCalculate,
   isFormValid,
   maxVacationDays,
 }: VacationCardFormProps) {
+  const [openOptions, setOpenOptions] = React.useState(false)
   const handleSalarioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatCurrencyInput(e.target.value)
     setSalario(formatted)
+  }
+
+  const handleDependentesChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = Number(e.target.value)
+
+    if (value < 0) {
+      setNumeroDependentes(0)
+      return
+    }
+
+    setNumeroDependentes(value)
+  }
+
+  const handleRendaVariavelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatCurrencyInput(e.target.value)
+    setRendaVariavel?.(formatted)
   }
 
   return (
@@ -78,19 +108,88 @@ export function VacationCardForm({
         />
       </div>
 
-      {/* Vender dias */}
-      <div className="flex items-center justify-between p-4 rounded-lg border border-border bg-muted/80">
-        <div className="space-y-0.5 flex-1">
-          <LabelWithTooltip
-            label="Vender dias de férias"
-            tooltipText="Ative esta opção se deseja vender parte dos seus dias de férias (abono pecuniário)."
-            htmlFor="vender"
-          />
-          <p className="text-sm text-muted-foreground">
-            Abono pecuniário (valor isento de impostos)
-          </p>
-        </div>
-        <Switch id="vender" checked={venderDias} onCheckedChange={setVenderDias} />
+      <div>
+        <button
+          type="button"
+          className="w-full flex items-center justify-between py-1 px-1 text-sm font-medium text-foreground hover:cursor-pointer hover:bg-muted/30"
+          onClick={() => setOpenOptions((v) => !v)}
+          aria-expanded={openOptions}
+        >
+          <span >Opções adicionais</span>
+          <ChevronDown className={`h-4 w-4 transition-transform ${openOptions ? 'rotate-180' : ''}`} />
+        </button>
+
+        <hr className="border-border" />
+
+        <AnimatePresence>
+          {openOptions && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.18 }}
+              className="overflow-hidden"
+            >
+              <div className="flex flex-col py-2 bg-muted/80">
+                {/* Vender dias */}
+                <div className="flex items-center justify-between p-2 mb-2">
+                  <div className="space-y-0.5 flex-1">
+                    <LabelWithTooltip
+                      label="Vender dias de férias"
+                      tooltipText="Ative esta opção se deseja vender parte dos seus dias de férias (abono pecuniário)."
+                      htmlFor="vender"
+                    />
+                  </div>
+                  <Switch id="vender" checked={venderDias} onCheckedChange={setVenderDias} />
+                </div>
+
+                {/* Dependentes */}
+                <div className="flex flex-col space-y-2 p-2">
+                  <div className="space-y-0.5 flex-1">
+                    <LabelWithTooltip
+                      label="Dependentes"
+                      tooltipText="Quantidade de dependentes utilizados para dedução do IRRF."
+                      htmlFor="dependentes"
+                    />
+                  </div>
+
+                  <div className="">
+                    <Input
+                      id="dependentes"
+                      type="number"
+                      min={0}
+                      className='bg-foreground/10 hover:bg-foreground/20 dark:bg-foreground/10 dark:hover:bg-foreground/20'
+                      value={numeroDependentes}
+                      onChange={handleDependentesChange}
+                    />
+                  </div>
+                </div>
+                {/* Renda Variável (extra dentro da área) */}
+                <div className="flex flex-col p-2 space-y-2">
+                  <div className="space-y-0.5 flex-1">
+                    <LabelWithTooltip
+                      label="Renda Variável"
+                      tooltipText="Rendimentos variáveis (comissões, bônus) que entram na base do cálculo das férias."
+                      htmlFor="renda-variavel-extra"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">R$</span>
+                    <Input
+                      id="renda-variavel-extra"
+                      type="text"
+                      placeholder="0,00"
+                      className="pl-10 bg-foreground/10 hover:bg-foreground/20 dark:bg-foreground/10 dark:hover:bg-foreground/20"
+                      value={rendaVariavel}
+                      onChange={handleRendaVariavelChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Botão Calcular */}
