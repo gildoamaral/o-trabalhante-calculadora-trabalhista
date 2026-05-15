@@ -10,3 +10,14 @@ export interface VacationResultType {
   irrf: number;
   totalLiquido: number;
 }
+
+export interface DecimoTerceiroResultType {
+  salarioBruto: number;
+  mesesTrabalhados: number;
+  valorBruto: number;
+  primeiraParcelaLiquida: number;
+  inss: number;
+  irrf: number;
+  segundaParcela: number;
+  totalLiquido: number;
+}

@@ -2,15 +2,23 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Calculator } from "lucide-react"
 import Link from "next/link"
+import { useTheme } from "next-themes"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { Badge } from "@/components/ui/badge"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+
+  const logoSrc = isMounted && resolvedTheme === "dark"
+    ? "/logo-subtitulo-dark.svg"
+    : "/logo-subtitulo.svg"
 
   useEffect(() => {
+    setIsMounted(true)
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
@@ -32,25 +40,14 @@ export function Header() {
     >
       <div className="w-full lg:container lg:mx-auto flex h-15 items-center justify-between px-4">
 
-        {/* Nome */}
-        <div className="flex items-center gap-4 group transition-all duration-300">
+        <Link href="/" className="flex items-center">
+          <img
+            src={logoSrc}
+            alt="O Trabalhante - Calculos Trabalhistas"
+            className="h-11 w-auto"
+          />
+        </Link>
 
-          <div className="flex items-center justify-center w-10 h-10 rounded-md transition-shadow duration-300 group-hover:shadow-md group-hover:shadow-primary/20">
-            <img src="otrabalhante.jpg" alt="O trabalhante" className='rounded-xl' />
-          </div>
-
-          <div className='flex flex-col transition-all duration-300 group-hover:translate-x-0.5'>
-          
-            <span className="text-lg font-semibold text-foreground leading-tight">
-              O Trabalhante
-            </span>
-
-            <span className="text-sm text-secondary-foreground leading-tight">
-              Calculadora Trabalhista
-              </span>
-          
-          </div>
-        </div>
 
         {/* Links */}
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -70,13 +67,10 @@ export function Header() {
             </Badge>
           </Link>
           <Link
-            href="#"
-            className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-2"
+            href="/decimo-terceiro"
+            className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
           >
-            13o Salario
-            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-              Em breve
-            </Badge>
+            13º Salário
           </Link>
         </nav>
 
