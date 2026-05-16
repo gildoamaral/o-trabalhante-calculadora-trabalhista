@@ -108,6 +108,8 @@ export function VacationCardForm({
         />
       </div>
 
+
+      {/* Menu */}
       <div>
         <button
           type="button"

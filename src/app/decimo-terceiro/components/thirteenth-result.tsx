@@ -40,7 +40,31 @@ export function ThirteenthResult({ result }: ThirteenthResultProps) {
           </p>
         </div>
 
+
         <CardContent className="p-6 space-y-6">
+
+          {/* Resumo por parcelas */}
+          <div className="space-y-3">
+            <h4 className="font-semibold text-foreground text-sm">Resumo por Parcelas</h4>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-lg border border-border bg-muted/40 p-4 text-center">
+                <p className="text-xs text-muted-foreground mb-1">1ª Parcela</p>
+                <p className="text-lg font-bold text-foreground">
+                  {formatCurrency(result.primeiraParcelaLiquida)}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Até 30 de novembro</p>
+              </div>
+              <div className="rounded-lg border border-border bg-muted/40 p-4 text-center">
+                <p className="text-xs text-muted-foreground mb-1">2ª Parcela</p>
+                <p className="text-lg font-bold text-foreground">
+                  {formatCurrency(result.segundaParcela)}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">Até 20 de dezembro</p>
+              </div>
+            </div>
+          </div>
+
+          <Separator />
 
           {/* Proventos */}
           <div className="space-y-3">
@@ -54,6 +78,13 @@ export function ThirteenthResult({ result }: ThirteenthResultProps) {
                 value={formatCurrency(result.valorBruto)}
                 delay={0.1}
               />
+              {result.rendaVariavel !== undefined && result.rendaVariavel > 0 && (
+                <ResultLine
+                  label="Renda Variável"
+                  value={formatCurrency(result.rendaVariavel)}
+                  delay={0.12}
+                />
+              )}
               <ResultLine
                 label="1ª Parcela (adiantamento, sem impostos)"
                 value={formatCurrency(result.primeiraParcelaLiquida)}
@@ -108,26 +139,7 @@ export function ThirteenthResult({ result }: ThirteenthResultProps) {
 
           <Separator />
 
-          {/* Resumo por parcelas */}
-          <div className="space-y-3">
-            <h4 className="font-semibold text-foreground text-sm">Resumo por Parcelas</h4>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-lg border border-border bg-muted/40 p-4 text-center">
-                <p className="text-xs text-muted-foreground mb-1">1ª Parcela</p>
-                <p className="text-lg font-bold text-foreground">
-                  {formatCurrency(result.primeiraParcelaLiquida)}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Até 30 de novembro</p>
-              </div>
-              <div className="rounded-lg border border-border bg-muted/40 p-4 text-center">
-                <p className="text-xs text-muted-foreground mb-1">2ª Parcela</p>
-                <p className="text-lg font-bold text-foreground">
-                  {formatCurrency(result.segundaParcela)}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Até 20 de dezembro</p>
-              </div>
-            </div>
-          </div>
+
 
           {/* Aviso */}
           <motion.div

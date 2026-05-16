@@ -14,6 +14,8 @@ export interface VacationResultType {
 
 export interface DecimoTerceiroResultType {
   salarioBruto: number;
+  rendaVariavel?: number;
+  numeroDependentes?: number;
   mesesTrabalhados: number;
   valorBruto: number;
   primeiraParcelaLiquida: number;

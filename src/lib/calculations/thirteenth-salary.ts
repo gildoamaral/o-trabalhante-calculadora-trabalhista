@@ -18,18 +18,21 @@ import { calcularINSS, calcularIRRF } from "./taxes";
 export function calcularDecimoTerceiro(
   salarioBruto: number,
   mesesTrabalhados: number,
+  numeroDependentes: number = 0,
+  rendaVariavel: number = 0,
 ): DecimoTerceiroResultType {
   const meses = Math.min(Math.max(Math.round(mesesTrabalhados), 1), 12);
+  const baseMensal = salarioBruto + (rendaVariavel || 0);
 
   // Valor bruto proporcional
-  const valorBruto = (salarioBruto / 12) * meses;
+  const valorBruto = (baseMensal / 12) * meses;
 
   // 1ª parcela: metade do bruto, sem impostos
   const primeiraParcelaLiquida = valorBruto / 2;
 
   // Descontos calculados sobre o total bruto do 13º (tabela exclusiva)
   const inss = calcularINSS(valorBruto);
-  const irrf = Math.max(0, calcularIRRF(valorBruto, inss));
+  const irrf = Math.max(0, calcularIRRF(valorBruto, inss, numeroDependentes));
 
   // 2ª parcela líquida = bruto - INSS - IRRF - 1ª parcela
   const segundaParcela = valorBruto - inss - irrf - primeiraParcelaLiquida;
@@ -39,6 +42,8 @@ export function calcularDecimoTerceiro(
 
   return {
     salarioBruto,
+    rendaVariavel,
+    numeroDependentes,
     mesesTrabalhados: meses,
     valorBruto,
     primeiraParcelaLiquida,

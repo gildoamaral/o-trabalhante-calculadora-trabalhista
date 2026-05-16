@@ -12,13 +12,16 @@ import { ThirteenthCardHeader, ThirteenthCardForm, ThirteenthResult } from './co
 export default function DecimoTerceiroCalculator() {
   const [salario, setSalario] = React.useState("")
   const [meses, setMeses] = React.useState(12)
+  const [numeroDependentes, setNumeroDependentes] = React.useState(0)
+  const [rendaVariavel, setRendaVariavel] = React.useState("")
   const [result, setResult] = React.useState<DecimoTerceiroResultType | null>(null)
 
   const handleCalculate = () => {
     const salarioNum = parseCurrency(salario)
     if (isNaN(salarioNum) || salarioNum <= 0) return
 
-    const resultado = calcularDecimoTerceiro(salarioNum, meses)
+    const rendaVariavelNum = rendaVariavel ? parseCurrency(rendaVariavel) : 0
+    const resultado = calcularDecimoTerceiro(salarioNum, meses, numeroDependentes, rendaVariavelNum)
     setResult(resultado)
   }
 
@@ -41,6 +44,10 @@ export default function DecimoTerceiroCalculator() {
               setSalario={setSalario}
               meses={meses}
               setMeses={setMeses}
+              numeroDependentes={numeroDependentes}
+              setNumeroDependentes={setNumeroDependentes}
+              rendaVariavel={rendaVariavel}
+              setRendaVariavel={setRendaVariavel}
               handleCalculate={handleCalculate}
               isFormValid={isFormValid}
             />
