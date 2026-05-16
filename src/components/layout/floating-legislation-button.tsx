@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import legislacaoFerias from "@/data/legislacao-ferias-data.json"
+import legislacaoDecimoTerceiro from "@/data/legislacao-decimo-terceiro-data.json"
 
 interface LegislacaoItem {
   titulo: string
@@ -33,7 +34,7 @@ const legislationData: Record<string, { title: string; description: string; item
   "/decimo-terceiro": {
     title: "Legislação Trabalhista - 13º Salário",
     description: "Principais artigos da CLT sobre 13º salário",
-    items: [], // Adicionar dados depois
+    items: legislacaoDecimoTerceiro as LegislacaoItem[],
   },
   "/rescisao": {
     title: "Legislação Trabalhista - Rescisão",
