@@ -71,8 +71,8 @@ export function VacationCardForm({
       {/* Salário */}
       <div className="space-y-2">
         <LabelWithTooltip
-          label="Salário"
-          tooltipText="Informe seu salário bruto mensal para calcular o valor das férias."
+          label="Salário Bruto"
+          tooltipText="Salário bruto mensal, sem benefícios ou descontos. Este valor é a base para o cálculo das férias."
           htmlFor="salario"
         />
         <div className="relative">
@@ -136,7 +136,7 @@ export function VacationCardForm({
                   <div className="space-y-0.5 flex-1">
                     <LabelWithTooltip
                       label="Vender dias de férias"
-                      tooltipText="Ative esta opção se deseja vender parte dos seus dias de férias (abono pecuniário)."
+                      tooltipText="Ative esta opção se deseja vender 1/3 dos seus dias de férias (abono pecuniário)."
                       htmlFor="vender"
                     />
                   </div>
@@ -169,7 +169,7 @@ export function VacationCardForm({
                   <div className="space-y-0.5 flex-1">
                     <LabelWithTooltip
                       label="Renda Variável"
-                      tooltipText="Rendimentos variáveis (comissões, bônus) que entram na base do cálculo das férias."
+                      tooltipText="Rendimentos variáveis (comissões, bônus). Coloque a média recebida mensalmente."
                       htmlFor="renda-variavel-extra"
                     />
                   </div>
