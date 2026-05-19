@@ -19,6 +19,7 @@ export default function VacationCalculator() {
   const [numeroDependentes, setNumeroDependentes] = React.useState<number>(0)
   const [rendaVariavel, setRendaVariavel] = React.useState<string>("")
   const [result, setResult] = React.useState<VacationResultType | null>(null)
+  const resultSectionRef = React.useRef<HTMLDivElement | null>(null)
 
   const diasFerias = React.useMemo(() => {
     if (dateRange?.from && dateRange?.to) {
@@ -26,6 +27,19 @@ export default function VacationCalculator() {
     }
     return 0
   }, [dateRange])
+
+  React.useEffect(() => {
+    if (!result) {
+      return
+    }
+
+    window.requestAnimationFrame(() => {
+      resultSectionRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
+  }, [result])
 
   const handleCalculate = () => {
     const salarioNum = parseCurrency(salario)
@@ -74,11 +88,13 @@ export default function VacationCalculator() {
         {/* Resultado */}
         <AnimatePresence>
           {result && (
-            <VacationResult
-              result={result}
-              dateRange={dateRange}
-              diasFerias={diasFerias}
-            />
+            <div ref={resultSectionRef} className="scroll-mt-24">
+              <VacationResult
+                result={result}
+                dateRange={dateRange}
+                diasFerias={diasFerias}
+              />
+            </div>
           )}
         </AnimatePresence>
       </div>

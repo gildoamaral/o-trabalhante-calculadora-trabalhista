@@ -130,7 +130,7 @@ function ResultHeader({
 }) {
   return (
     <div className="bg-primary/5 border-b border-border p-6 relative">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between">
         <div className="flex-1" />
         <Button
           variant="ghost"

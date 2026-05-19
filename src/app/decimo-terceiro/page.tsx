@@ -15,6 +15,20 @@ export default function DecimoTerceiroCalculator() {
   const [numeroDependentes, setNumeroDependentes] = React.useState(0)
   const [rendaVariavel, setRendaVariavel] = React.useState("")
   const [result, setResult] = React.useState<DecimoTerceiroResultType | null>(null)
+  const resultSectionRef = React.useRef<HTMLDivElement | null>(null)
+
+  React.useEffect(() => {
+    if (!result) {
+      return
+    }
+
+    window.requestAnimationFrame(() => {
+      resultSectionRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
+  }, [result])
 
   const handleCalculate = () => {
     const salarioNum = parseCurrency(salario)
@@ -57,7 +71,9 @@ export default function DecimoTerceiroCalculator() {
         {/* Resultado */}
         <AnimatePresence>
           {result && (
-            <ThirteenthResult result={result} />
+            <div ref={resultSectionRef} className="scroll-mt-24">
+              <ThirteenthResult result={result} />
+            </div>
           )}
         </AnimatePresence>
       </div>
