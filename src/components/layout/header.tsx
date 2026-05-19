@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { Badge } from "@/components/ui/badge"
@@ -11,6 +12,15 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const { resolvedTheme } = useTheme()
+  const pathname = usePathname()
+
+  const linkClass = (href: string) => {
+    const base = 'px-3 py-2 text-sm font-medium rounded-md transition-colors'
+    const active = pathname?.startsWith(href)
+      ? 'text-primary bg-primary/5'
+      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+    return `${base} ${active}`
+  }
 
   const logoSrc = isMounted && resolvedTheme === "dark"
     ? "/logo-subtitulo-dark.svg"
@@ -51,25 +61,16 @@ export function Header() {
 
         {/* Links */}
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-          <Link
-            href="/ferias"
-            className="px-3 py-2 text-sm font-medium text-primary bg-primary/5 rounded-md transition-colors"
-          >
+          <Link href="/ferias" className={linkClass('/ferias')}>
             Ferias
           </Link>
-          <Link
-            href="#"
-            className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors flex items-center gap-2"
-          >
+          <Link href="/rescisao" className={`${linkClass('/rescisao')} flex items-center gap-2`}>
             Rescisao
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
               Em breve
             </Badge>
           </Link>
-          <Link
-            href="/decimo-terceiro"
-            className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-          >
+          <Link href="/decimo-terceiro" className={linkClass('/decimo-terceiro')}>
             13º Salário
           </Link>
         </nav>
