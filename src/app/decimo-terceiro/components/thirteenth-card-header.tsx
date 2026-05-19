@@ -10,11 +10,11 @@ export function ThirteenthCardHeader() {
             <Gift className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <CardTitle className="text-xl text-foreground">
+            <CardTitle className="text-lg md:text-xl text-foreground">
               Calculadora de 13º Salário
             </CardTitle>
             <CardDescription className="text-muted-foreground">
-              Calcule sua gratificação natalina CLT
+              Calcule sua Gratificação Natalina
             </CardDescription>
           </div>
         </div>
