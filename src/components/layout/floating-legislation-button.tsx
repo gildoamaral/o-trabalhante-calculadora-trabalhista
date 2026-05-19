@@ -46,18 +46,50 @@ const legislationData: Record<string, { title: string; description: string; item
 export function FloatingLegislationButton() {
   const pathname = usePathname()
   const legislation = legislationData[pathname]
+  const [isOpen, setIsOpen] = React.useState(false)
+  const hasPushedState = React.useRef(false)
+
+  React.useEffect(() => {
+    const onPopState = () => {
+      if (!hasPushedState.current) return
+      hasPushedState.current = false
+      setIsOpen(false)
+    }
+
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen) {
+      if (!hasPushedState.current && window.history.state?.floatingLegislationOpen !== true) {
+        window.history.pushState({ ...(window.history.state ?? {}), floatingLegislationOpen: true }, '', window.location.href)
+        hasPushedState.current = true
+      }
+      setIsOpen(true)
+      return
+    }
+
+    if (hasPushedState.current) {
+      // go back to consume the pushed history entry
+      window.history.back()
+      return
+    }
+
+    setIsOpen(false)
+  }
 
   if (!legislation || legislation.items.length === 0) {
     return null
   }
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <Button
           size="icon"
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
-          aria-label="Ver legislação"
+          className="fixed bottom-6 cursor-pointer  right-6 h-14 w-14 rounded-full z-50"
+          aria-label="Ver legislação "
         >
           <BookOpen className="h-6 w-6" />
         </Button>
@@ -92,6 +124,10 @@ export function FloatingLegislationButton() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group"
+                      onClick={() => {
+                        hasPushedState.current = false
+                        setIsOpen(false)
+                      }}
                     >
                       <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap flex items-center gap-1 hover:bg-primary/20 transition-colors">
                         {item.artigo}

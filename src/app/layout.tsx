@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/layout/theme-provider'
+// @ts-ignore: Allow side-effect CSS import without type declarations
 import './globals.css'
 import { Header } from '@/components/layout/header'
 import { FeaturesBeneficios } from '@/components/layout/features-beneficios'
