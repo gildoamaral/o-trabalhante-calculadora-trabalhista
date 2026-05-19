@@ -91,7 +91,7 @@ export function Header() {
           : 'border-border bg-background/95 backdrop-blur-sm'
         }`}
     >
-      <div className="w-full lg:container lg:mx-auto flex h-15 items-center justify-between px-4">
+      <div className="w-full lg:container lg:mx-auto flex h-16 items-center justify-between px-4">
 
         {/* Left: Logo */}
         <Link href="/" className="flex items-center">
