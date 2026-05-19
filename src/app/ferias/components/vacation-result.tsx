@@ -2,13 +2,15 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { TrendingUp, TrendingDown, Info } from "lucide-react"
+import { TrendingUp, TrendingDown, Info, Copy, Check } from "lucide-react"
 import { format } from "date-fns"
 import type { DateRange } from "react-day-picker"
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 import { formatCurrency } from "@/lib/format"
+import { formatVacationCopy } from "@/lib/format-copy-result-vacation"
 import type { VacationResultType } from "@/types/types"
 
 interface VacationResultProps {
@@ -28,6 +30,57 @@ export function VacationResult({
   dateRange,
   diasFerias,
 }: VacationResultProps) {
+  const [isCopied, setIsCopied] = React.useState(false)
+  const copiedTimeoutRef = React.useRef<number | null>(null)
+
+  React.useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current !== null) {
+        window.clearTimeout(copiedTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const copyTextToClipboard = async (text: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text)
+      return
+    }
+
+    const textarea = document.createElement("textarea")
+    textarea.value = text
+    textarea.setAttribute("readonly", "true")
+    textarea.style.position = "fixed"
+    textarea.style.opacity = "0"
+    textarea.style.left = "-9999px"
+    document.body.appendChild(textarea)
+    textarea.focus()
+    textarea.select()
+
+    const success = document.execCommand("copy")
+    document.body.removeChild(textarea)
+
+    if (!success) {
+      throw new Error("Falha ao copiar o resultado")
+    }
+  }
+
+  const handleCopyResult = async () => {
+    try {
+      const formattedText = formatVacationCopy(result, dateRange, diasFerias)
+      await copyTextToClipboard(formattedText)
+      setIsCopied(true)
+
+      if (copiedTimeoutRef.current !== null) {
+        window.clearTimeout(copiedTimeoutRef.current)
+      }
+
+      copiedTimeoutRef.current = window.setTimeout(() => setIsCopied(false), 2000)
+    } catch (err) {
+      console.error("Erro ao copiar:", err)
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -41,6 +94,8 @@ export function VacationResult({
           totalLiquido={result.totalLiquido}
           dateRange={dateRange}
           diasFerias={diasFerias}
+          isCopied={isCopied}
+          onCopy={handleCopyResult}
         />
 
         <CardContent className="p-6 space-y-6">
@@ -64,13 +119,35 @@ function ResultHeader({
   totalLiquido,
   dateRange,
   diasFerias,
+  isCopied,
+  onCopy,
 }: {
   totalLiquido: number
   dateRange?: DateRange
   diasFerias: number
+  isCopied: boolean
+  onCopy: () => void
 }) {
   return (
-    <div className="bg-primary/5 border-b border-border p-6 text-center">
+    <div className="bg-primary/5 border-b border-border p-6 relative">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex-1" />
+        <Button
+          variant="ghost"
+          size="icon"
+          type="button"
+          onClick={onCopy}
+          className="hover:bg-primary/20 absolute top-3 right-3 rounded-md"
+          title="Copiar resultado"
+        >
+          {isCopied ? (
+            <Check className="h-5 w-5 text-green-600" />
+          ) : (
+            <Copy className="h-5 w-5" />
+          )}
+        </Button>
+      </div>
+      <div className="text-center">
       <p className="text-sm text-muted-foreground mb-1">
         Valor líquido a receber
       </p>
@@ -88,6 +165,7 @@ function ResultHeader({
           {format(dateRange.to, "dd/MM/yyyy")} ({diasFerias} dias)
         </p>
       )}
+      </div>
     </div>
   )
 }

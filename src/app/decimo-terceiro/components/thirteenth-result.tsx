@@ -1,10 +1,13 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { TrendingUp, TrendingDown, Info } from "lucide-react"
+import { TrendingUp, TrendingDown, Info, Copy, Check } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 import { formatCurrency } from "@/lib/format"
+import { formatDecimoTerceiroCopy } from "@/lib/format-copy-result-thirteenth-salary"
 import type { DecimoTerceiroResultType } from "@/types/types"
 
 interface ThirteenthResultProps {
@@ -12,6 +15,55 @@ interface ThirteenthResultProps {
 }
 
 export function ThirteenthResult({ result }: ThirteenthResultProps) {
+  const [isCopied, setIsCopied] = useState(false)
+  const copiedTimeoutRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current !== null) {
+        window.clearTimeout(copiedTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const copyTextToClipboard = async (text: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text)
+      return
+    }
+
+    const textarea = document.createElement("textarea")
+    textarea.value = text
+    textarea.setAttribute("readonly", "true")
+    textarea.style.position = "fixed"
+    textarea.style.opacity = "0"
+    textarea.style.left = "-9999px"
+    document.body.appendChild(textarea)
+    textarea.focus()
+    textarea.select()
+
+    const success = document.execCommand("copy")
+    document.body.removeChild(textarea)
+
+    if (!success) {
+      throw new Error("Falha ao copiar o resultado")
+    }
+  }
+
+  const handleCopyResult = async () => {
+    try {
+      const formattedText = formatDecimoTerceiroCopy(result)
+      await copyTextToClipboard(formattedText)
+      setIsCopied(true)
+      if (copiedTimeoutRef.current !== null) {
+        window.clearTimeout(copiedTimeoutRef.current)
+      }
+      copiedTimeoutRef.current = window.setTimeout(() => setIsCopied(false), 2000)
+    } catch (err) {
+      console.error('Erro ao copiar:', err)
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -21,7 +73,25 @@ export function ThirteenthResult({ result }: ThirteenthResultProps) {
     >
       <Card className="border-border shadow-sm overflow-hidden">
         {/* Header com valor principal */}
-        <div className="bg-primary/5 border-b border-border p-6 text-center">
+        <div className="bg-primary/5 border-b border-border p-6 relative">
+          <div className="flex items-center justify-between ">
+            <div className="flex-1" />
+            <Button
+              variant="ghost"
+              size="icon"
+              type="button"
+              onClick={handleCopyResult}
+              className="hover:bg-primary/20 absolute top-3 right-3 rounded-md"
+              title="Copiar resultado"
+            >
+              {isCopied ? (
+                <Check className="h-5 w-5 text-green-600" />
+              ) : (
+                <Copy className="h-5 w-5" />
+              )}
+            </Button>
+          </div>
+          <div className="text-center">
           <p className="text-sm text-muted-foreground mb-1">
             Total líquido a receber
           </p>
@@ -38,6 +108,7 @@ export function ThirteenthResult({ result }: ThirteenthResultProps) {
               ? "13º completo (12 meses)"
               : `Proporcional a ${result.mesesTrabalhados}/12 meses`}
           </p>
+          </div>
         </div>
 
 
