@@ -73,7 +73,7 @@ calculadora-trabalhista/
      │   │       ├── vacation-card-form.tsx
      │   │       ├── vacation-card-header.tsx
      │   │       └── vacation-result.tsx
-     │   ├── recisao/
+     │   ├── rescisao/
      │   └── decimo-terceiro/
      │
      ├── components/             # Componentes reutilizáveis

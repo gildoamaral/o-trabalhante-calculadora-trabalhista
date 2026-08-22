@@ -1,0 +1,1 @@
+export { calcularRescisao } from "./recisao/orquestrador";

@@ -6,7 +6,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
-import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
@@ -108,11 +107,8 @@ export function Header() {
           <Link href="/ferias" className={linkClass('/ferias')}>
             Ferias
           </Link>
-          <Link href="/#" className={`${linkClass('/rescisao')} flex items-center gap-2`}>
+          <Link href="/rescisao" className={linkClass('/rescisao')}>
             Rescisao
-            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-              Em breve
-            </Badge>
           </Link>
           <Link href="/decimo-terceiro" className={linkClass('/decimo-terceiro')}>
             13º Salário
@@ -149,17 +145,14 @@ export function Header() {
                   Ferias
                 </Link>
                 <Link
-                  href="/#"
-                  className={[linkClass('/rescisao'), "flex items-center gap-2"].join(' ')}
+                  href="/rescisao"
+                  className={linkClass('/rescisao')}
                   onClick={() => {
                     hasPushedMenuState.current = false
                     setIsMobileMenuOpen(false)
                   }}
                 >
                   Rescisao
-                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-                    Em breve
-                  </Badge>
                 </Link>
                 <Link
                   href="/decimo-terceiro"
